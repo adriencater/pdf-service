@@ -20,8 +20,8 @@ A lightweight HTML-to-PDF microservice using Puppeteer and PagedJS. Designed as 
 ## Installation
 
 ```bash
-git clone https://github.com/adriencater/dossier-pdf-service.git
-cd dossier-pdf-service
+git clone https://github.com/adriencater/pdf-service.git
+cd pdf-service
 npm install
 ```
 
