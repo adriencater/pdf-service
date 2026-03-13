@@ -1,6 +1,6 @@
 # Dossier PDF Service
 
-A lightweight HTML-to-PDF microservice using Puppeteer and PagedJS. Designed as a companion to the [Kirby Dossier](https://github.com/adriencater/kirby-dossier) plugin, but usable standalone for any HTML-to-PDF conversion with CSS paged media support.
+A lightweight HTML-to-PDF microservice using Puppeteer and PagedJS. Designed as a companion to the [Kirby Dossier](https://github.com/adriencater/kirby-dossier-plugin) plugin, but usable standalone for any HTML-to-PDF conversion with CSS paged media support.
 
 ## How it works
 

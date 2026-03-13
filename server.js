@@ -52,10 +52,11 @@ async function mergeWithAttachments(mainPdfBytes, attachments) {
 
 app.post('/render', async function (req, res) {
 	var html = req.body.html;
+	var url = req.body.url;
 	var attachments = req.body.attachments || [];
 
-	if (!html) {
-		return res.status(400).json({ error: 'Missing html in request body' });
+	if (!html && !url) {
+		return res.status(400).json({ error: 'Missing html or url in request body' });
 	}
 
 	var page;
@@ -70,8 +71,12 @@ app.post('/render', async function (req, res) {
 			console.error('PAGE ERROR:', err.message);
 		});
 
-		// Load HTML without PagedJS — just the content + CSS
-		await page.setContent(html, { waitUntil: 'networkidle0', timeout: 60000 });
+		// Load content: navigate to URL or set HTML directly
+		if (url) {
+			await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
+		} else {
+			await page.setContent(html, { waitUntil: 'networkidle0', timeout: 60000 });
+		}
 
 		// Set up completion flag, then inject PagedJS via addScriptTag
 		await page.evaluate(function () {
