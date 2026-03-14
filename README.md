@@ -56,11 +56,23 @@ Renders HTML to PDF.
 }
 ```
 
+Or with a URL instead of inline HTML:
+
+```json
+{
+  "url": "https://example.com/page-to-render",
+  "attachments": []
+}
+```
+
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `html` | string | yes | Complete HTML document to render |
+| `html` | string | one of `html` or `url` required | Complete HTML document to render |
+| `url` | string | one of `html` or `url` required | URL to navigate to and render |
 | `attachments` | array | no | PDF files to append after the main content |
 | `attachments[].data` | string | no | Base64-encoded PDF file |
+
+When `url` is provided, Puppeteer navigates to the URL (with `networkidle0`) instead of loading inline HTML. This is useful when the HTML references external assets (stylesheets, images) that the browser can fetch directly.
 
 **Response**: `application/pdf` binary
 
