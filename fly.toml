@@ -8,8 +8,9 @@ primary_region = 'ams'
 
 [build]
 
-[env]                                                                                      
-PORT = "8080"
+[env]
+  PORT = "8080"
+  IDLE_MINUTES = "60"
   
 [http_service]
   internal_port = 8080

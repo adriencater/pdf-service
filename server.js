@@ -7,6 +7,19 @@ var { PDFDocument } = require('pdf-lib');
 var app = express();
 var port = process.env.PORT || 3100;
 var browser = null;
+var idleTimeout = (process.env.IDLE_MINUTES || 60) * 60 * 1000;
+var idleTimer = null;
+
+function resetIdleTimer() {
+	if (idleTimer) clearTimeout(idleTimer);
+	idleTimer = setTimeout(async function () {
+		console.log('Idle timeout reached, shutting down');
+		if (browser) await browser.close().catch(function () {});
+		process.exit(0);
+	}, idleTimeout);
+}
+
+resetIdleTimer();
 
 // Pre-load PagedJS polyfill from node_modules
 var pagedJsPath = path.join(path.dirname(require.resolve('pagedjs')), '..', 'dist', 'paged.polyfill.js');
@@ -54,6 +67,8 @@ app.post('/render', async function (req, res) {
 	var html = req.body.html;
 	var url = req.body.url;
 	var attachments = req.body.attachments || [];
+
+	resetIdleTimer();
 
 	if (!html && !url) {
 		return res.status(400).json({ error: 'Missing html or url in request body' });
