@@ -78,6 +78,7 @@ app.post('/render', async function (req, res) {
 	try {
 		var b = await getBrowser();
 		page = await b.newPage();
+		await page.setBypassCSP(true);
 
 		page.on('console', function (msg) {
 			console.log('PAGE:', msg.text());
